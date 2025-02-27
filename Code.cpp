@@ -75,8 +75,9 @@ void Morse_a_Texto() {
 }
 
 int main() {
-    char select = '0';
-
+    system("clear");
+    char select;
+cout << "** El Menu Interactivo UPV **\n1) De texto a Morse\n2) De Morse a texto\nElija una opcion:\n";
     while (true) {
         cin >> select;
         if (select == '1') {
