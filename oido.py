@@ -2,7 +2,7 @@ import pyaudio
 import numpy as np
 import time
 
-# Diccionario Morse a texto
+# El Diccionario UPV
 MORSE_CODE = {
     ".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E",
     "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J",
@@ -54,12 +54,18 @@ def detect_morse():
                     morse_sequence += "-"
                 
                 last_sound_time = time.time()
+            else:
+                if last_sound_time is not None and (time.time() - last_sound_time) > 1.5:
+                    # Nueva letra
+                    print(MORSE_CODE.get(morse_sequence, "?"), end="", flush=True)
+                    morse_sequence = ""
+                    last_sound_time = None
     except KeyboardInterrupt:
         print("\nFinalizando...")
+    finally:
         stream.stop_stream()
         stream.close()
         p.terminate()
 
 if __name__ == "__main__":
     detect_morse()
-
