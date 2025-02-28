@@ -16,7 +16,7 @@ void Texto_a_Morse() {
     system("clear");
     char EL_Mensaje[500] = {};
     cout << "Ingrese una frase: " << endl;
-    cin.ignore();
+   
     cin.getline(EL_Mensaje, 500);
 
     map<char, string> morseCode = {
@@ -46,24 +46,8 @@ void Texto_a_Morse() {
     cout << "Mensaje en Morse: " << mensaje_morse << endl;
 }
 
-void Morse_a_Texto() {
-    system("clear");
-    // Implementación pendiente
-}
-
 int main() {
     system("clear");
-    char select;
-    cout << "** El Menu Interactivo UPV **\n1) De texto a Morse\n2) De Morse a texto\nElija una opcion:\n";
-    while (true) {
-        cin >> select;
-        if (select == '1') {
-            Texto_a_Morse();
-            break;
-        } else if (select == '2') {
-            Morse_a_Texto();
-            break;
-        }
-    }
+    Texto_a_Morse();
     return 0;
 }
