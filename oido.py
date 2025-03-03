@@ -14,9 +14,9 @@ MORSE_CODE = {
 }
 
 # Configuración de audio
-CHUNK = 1024  # Tamaño de cada muestra
+CHUNK = 256  # Tamaño de cada muestra (reducido para menor latencia)
 RATE = 44100  # Frecuencia de muestreo
-THRESHOLD = 1000  # Umbral de sonido
+THRESHOLD = 800  # Umbral de sonido (ajustado para mayor sensibilidad)
 
 def detect_morse():
     p = pyaudio.PyAudio()
@@ -34,11 +34,11 @@ def detect_morse():
             if volume > THRESHOLD:
                 if last_sound_time is not None:
                     silence_duration = time.time() - last_sound_time
-                    if silence_duration > 1.5:
+                    if silence_duration > 0.5:  # Reducido para detección más rápida
                         # Nueva letra
                         print(MORSE_CODE.get(morse_sequence, "?"), end="", flush=True)
                         morse_sequence = ""
-                    elif silence_duration > 0.5:
+                    elif silence_duration > 0.2:  # Reducido para detección más rápida
                         # Espacio entre palabras
                         print(" ", end="", flush=True)
                 
@@ -48,14 +48,14 @@ def detect_morse():
                     volume = np.max(np.abs(data))
                 duration = time.time() - start_time
                 
-                if duration < 0.2:
+                if duration < 0.1:  # Reducido para detección más rápida
                     morse_sequence += "."
                 else:
                     morse_sequence += "-"
                 
                 last_sound_time = time.time()
             else:
-                if last_sound_time is not None and (time.time() - last_sound_time) > 1.5:
+                if last_sound_time is not None and (time.time() - last_sound_time) > 0.5:  # Reducido para detección más rápida
                     # Nueva letra
                     print(MORSE_CODE.get(morse_sequence, "?"), end="", flush=True)
                     morse_sequence = ""
