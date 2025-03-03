@@ -5,5 +5,7 @@
 - Instalar PyAudio con pip: pip3 install pyaudio
 - Verificar la instalacion: python3 -c "import pyaudio; print('PyAudio instalado correctamente')"
 - La biblioteca numpy: sudo apt install python3-numpy
+- Instalar el sondio de Morse: sudo apt install sox
+- Soporte para formatos como MP3: sudo apt install sox libsox-fmt-all
 
 ![Logo](https://media.tenor.com/x8v1oNUOmg4AAAAM/rickroll-roll.gif)
