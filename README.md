@@ -1,7 +1,7 @@
 
 # 📟 El codigo Morse UPV
 
-Mi compañero y yo hicimos un programa que consiste en recibir un mensaje en Morse, para despues, traducirlo al español e imprimirlo en la consola y viceversa, dar un mensaje en español y pasarlo a Morse.
+Mi compañero y yo hicimos un programa que consiste en recibir un mensaje en Morse, para despues, traducirlo al español e imprimirlo en la consola y viceversa, da un mensaje en español y lo convierte a Morse.
 
 ## Como ejecutarlo 🎯
 Primero se tiene que ejecutar el archivo Bash, ya que lo que hace es imprimir el menu y compilar el archivo C++ y Python
