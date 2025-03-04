@@ -9,7 +9,7 @@ void beepMorse(char signal) {
     } else if (signal == '-') {
         system("play -nq -t alsa synth 0.45 sine 1000");
     }
-    usleep(150000);
+    usleep(150000); // Pausa entre señales
 }
 
 void Texto_a_Morse() {
