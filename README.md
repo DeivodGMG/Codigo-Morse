@@ -17,7 +17,7 @@ Figura 2: En ejecusion el archivo C++.
 ## Ahora si viene lo chido: De Morse a texto pa ⚡
 El codigo se creo en un archivo Python, porque es un lenguaje de programacion que contiene los recursos para el uso del microfono, al igual que los repositorios del codigo Morse .
 
-![Logo](https://cdn.discordapp.com/attachments/1074344483824603217/1346148761935548527/Screenshot_from_2025-03-03_09-53-56.png?ex=67c7223b&is=67c5d0bb&hm=e0a09f5b390e2e86823eca69e3659c0a0bb3274c0d023d51a12d02b3d4ef1f61&)
+![Logo](https://cdn.discordapp.com/attachments/1074344483824603217/1346331981247680622/Screenshot_from_2025-03-03_22-02-17.png?ex=67c7ccdd&is=67c67b5d&hm=5544fea55fbc0f971a3ea230b713fdda8a5c20e696ffba30287061a5afc595d9&)
 
 Figura 3: En ejecusion el archivo Python.
 
