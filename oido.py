@@ -1,6 +1,7 @@
 import pyaudio
 import numpy as np
 import time
+from os import system
 
 # El Diccionario UPV
 MORSE_CODE = {
@@ -17,14 +18,17 @@ MORSE_CODE = {
 CHUNK = 256  # Tamaño de cada muestra (reducido para menor latencia)
 RATE = 44100  # Frecuencia de muestreo
 THRESHOLD = 800  # Umbral de sonido (ajustado para mayor sensibilidad)
+INACTIVITY_TIMEOUT = 5  # Tiempo de inactividad para finalizar el programa (en segundos)
 
 def detect_morse():
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
-    
-    print("Escuchando... Usa sonidos cortos para puntos y largos para rayas")
+    system("clear")
+    print("Escuchando el mensaje: (segun)")
     morse_sequence = ""
     last_sound_time = None
+    message = ""
+    start_time = time.time()
     
     try:
         while True:
@@ -32,40 +36,45 @@ def detect_morse():
             volume = np.max(np.abs(data))
             
             if volume > THRESHOLD:
+                start_time = time.time()  # Resetear el tiempo de inicio en cada detección de sonido
                 if last_sound_time is not None:
                     silence_duration = time.time() - last_sound_time
-                    if silence_duration > 0.5:  # Reducido para detección más rápida
+                    if silence_duration > 0.3:  # Pausa entre letras (300ms)
                         # Nueva letra
-                        print(MORSE_CODE.get(morse_sequence, "?"), end="", flush=True)
+                        message += MORSE_CODE.get(morse_sequence, "?")
                         morse_sequence = ""
-                    elif silence_duration > 0.2:  # Reducido para detección más rápida
+                    elif silence_duration > 0.15:  # Pausa entre señales (150ms)
                         # Espacio entre palabras
-                        print(" ", end="", flush=True)
+                        message += " "
                 
-                start_time = time.time()
+                signal_start_time = time.time()
                 while volume > THRESHOLD:
                     data = np.frombuffer(stream.read(CHUNK, exception_on_overflow=False), dtype=np.int16)
                     volume = np.max(np.abs(data))
-                duration = time.time() - start_time
+                duration = time.time() - signal_start_time
                 
-                if duration < 0.1:  # Reducido para detección más rápida
+                if duration < 0.2:  # Punto (150ms)
                     morse_sequence += "."
                 else:
                     morse_sequence += "-"
                 
                 last_sound_time = time.time()
             else:
-                if last_sound_time is not None and (time.time() - last_sound_time) > 0.5:  # Reducido para detección más rápida
-                    # Nueva letra
-                    print(MORSE_CODE.get(morse_sequence, "?"), end="", flush=True)
+                if last_sound_time is not None and (time.time() - last_sound_time) > 0.3:  # Pausa entre letras (300ms)
+                    message += MORSE_CODE.get(morse_sequence, "?")
                     morse_sequence = ""
                     last_sound_time = None
+            
+            # Verificar si ha pasado el tiempo de inactividad
+            if time.time() - start_time > INACTIVITY_TIMEOUT:
+                break
     except KeyboardInterrupt:
         print("\nFinalizando...")
     finally:
         stream.stop_stream()
         stream.close()
         p.terminate()
+        print("\nMensaje traducido: " + message)
 
 if __name__ == "__main__":
     detect_morse()
